@@ -1,0 +1,18 @@
+Package: clusterwiselmm
+Title: Apply geometrical clusterwise to linear multi-level models (lmm)
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Redha Abderrahmane",
+           family = "Alliche",
+           role = c("aut", "cre"),
+           email = "allicheredha@gmail.com")
+Description: provides a geometrical clusterwise approach applied to linear multi level models.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

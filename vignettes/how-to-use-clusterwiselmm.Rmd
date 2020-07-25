@@ -1,0 +1,23 @@
+---
+title: "How to use clusterwiselmm"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{how-to-use-clusterwiselmm}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(clusterwiselmm)
+```
+
+```{r generate data}
+print("data is generated")
+```
