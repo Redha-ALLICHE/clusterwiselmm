@@ -17,7 +17,9 @@ BugReports: https://github.com/Redha-ALLICHE/clusterwiselmm/issues
 Imports: 
     MASS,
     stats,
-    ggplot2
+    ggplot2,
+    lme4,
+    ramify
 Suggests: 
     knitr,
     rmarkdown

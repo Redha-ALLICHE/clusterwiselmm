@@ -56,7 +56,7 @@ data frame containing the generated data containing the following list of column
 }
 \description{
 Generate univariate (for now) linear 3 level data with \code{n3} groups,
-\code{n2} subgroups per group and n3 individuals per subgroups.
+\code{n2} subgroups per group and \code{n1} individuals per subgroups.
 }
 \details{
 The generated data follows the 3 levels lmm equations given below :
@@ -77,13 +77,13 @@ With : \cr
 }
 \examples{
 ## define correlation matrices for random effets slopes and intercepts
-lvl2_corr_mat = matrix(c(1, 0
+lvl2_corr_mat = matrix(c(1, 0,
                          0, 1), 2, 2)
-lvl3_corr_mat = matrix(c(10, 0
+lvl3_corr_mat = matrix(c(10, 0,
                          0, 10), 2, 2)
 
 ## to generate 3 levels data with 3 groups that contains each 10 subgroups,
- and each subgroup contains 30 individuals
+## and each subgroup contains 30 individuals
 data = simulate_data(n1 = 30,
                      n2 = 10,
                      n3 = 3,

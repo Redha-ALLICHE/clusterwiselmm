@@ -1,3 +1,5 @@
 usethis::use_package("MASS")
 usethis::use_package("stats")
 usethis::use_package("ggplot2")
+usethis::use_package("lme4")
+usethis::use_package("ramify")

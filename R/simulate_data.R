@@ -1,6 +1,6 @@
 #' @title  Simulate 3 levels data
 #' @description Generate univariate (for now) linear 3 level data with \code{n3} groups,
-#'  \code{n2} subgroups per group and n3 individuals per subgroups.
+#'  \code{n2} subgroups per group and \code{n1} individuals per subgroups.
 #'
 #' @param n1 number of individuals at level 1. Must be strictly positive.
 #' @param n2 number of subgroups at level 2. Must be strictly positive.
@@ -53,7 +53,7 @@
 #'                          0, 10), 2, 2)
 #'
 #' ## to generate 3 levels data with 3 groups that contains each 10 subgroups,
-#'  and each subgroup contains 30 individuals
+#' ## and each subgroup contains 30 individuals
 #' data = simulate_data(n1 = 30,
 #'                      n2 = 10,
 #'                      n3 = 3,

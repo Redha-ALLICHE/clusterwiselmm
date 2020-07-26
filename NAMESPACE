@@ -2,4 +2,7 @@
 
 export(simulate_data)
 importFrom(MASS,mvrnorm)
+importFrom(lme4,lmer)
+importFrom(ramify,argmin)
+importFrom(stats,predict)
 importFrom(stats,runif)
