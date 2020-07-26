@@ -7,8 +7,8 @@
 
 <!-- badges: end -->
 
-The goal of clusterwiselmm is to provide a geometrical clusterwise
-method for multi-level models (lmm)
+The goal of clusterwiselmm is to provide geometrical clusterwise method
+for multi-level models (lmm)
 
 ## Installation
 
