@@ -11,19 +11,26 @@
 #' @importFrom ramify argmin
 #' @importFrom stats predict
 
-predict_cluster <- function(data, target, models){
-  if(class(models)!="clmm") stop("models must be of class clmm")
+predict_cluster <- function(data, target, models) {
+  if (class(models) != "clmm")
+    stop("models must be of class clmm")
 
   predictions = mse(predict(models[[1]],
-                            newdata=data,
-                            allow.new.levels = TRUE), target, residuals=TRUE)
+                            newdata = data,
+                            allow.new.levels = TRUE),
+                    target,
+                    residuals = TRUE)
 
-  for(i in 2:length(models)){
+  for (i in 2:length(models)) {
     predictions = cbind(predictions,
-                        mse(predict(models[[i]],
-                                    newdata=data,
-                                    allow.new.levels = TRUE), target, residuals=TRUE))
-    clustering = argmin(predictions, rows=FALSE)
+                        mse(
+                          predict(models[[i]],
+                                  newdata = data,
+                                  allow.new.levels = TRUE),
+                          target,
+                          residuals = TRUE
+                        ))
   }
+  clustering = argmin(predictions)
   return(clustering)
 }

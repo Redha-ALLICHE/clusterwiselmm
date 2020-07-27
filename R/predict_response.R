@@ -9,16 +9,19 @@
 #'
 #' @importFrom stats predict
 
-predict_response <- function(data, clusters, models){
+predict_response <- function(data, clusters, models) {
   indices = c()
   prediction = c()
-  if(class(models) != "clmm"){return(Inf)}
-  for(i in 1:length(models)){
-    temp = which(clusters==i)
-    indices = c(indices, temp)
-    data.sample = data[temp,]
-    prediction = c(prediction, predict(models[[i]], newdata=data.sample, allow.new.levels = TRUE))
+  if (class(models) != "clmm") {
+    return(Inf)
   }
-  prediction = prediction[indices]
+  for (i in 1:length(models)) {
+    temp = which(clusters == i)
+    indices = c(indices, temp)
+    data.sample = data[temp, ]
+    prediction = c(prediction,
+                   predict(models[[i]], newdata = data.sample, allow.new.levels = TRUE))
+  }
+  prediction = prediction[sort(indices, index.return=TRUE)$ix]
   return(prediction)
 }

@@ -25,7 +25,8 @@ in \code{lmer} from \pkg{lme4} package.}
 
 \item{nb_iterations}{maximum number of iterations.}
 
-\item{initialization}{if vector of the same length of data, use this vector as clustering initialization.}
+\item{initialization}{if vector of the same length of data, use this vector as clustering initialization.
+Otherwise, do a random initialization.}
 }
 \value{
 list containing the models as a class of clmm, the final clustering and the final cost.

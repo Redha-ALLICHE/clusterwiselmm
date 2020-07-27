@@ -1,8 +1,8 @@
 ---
-title: "How to use clusterwise lmm"
+title: "How to generate data"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{How to use clusterwise lmm}
+  %\VignetteIndexEntry{How to generate data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -21,23 +21,22 @@ library(ggplot2)
 ## Defining the random effets correlation matrices
 ```{r}
 lvl2_corr_mat = matrix(c(1, 0,
-                         0, 1), 2, 2)
-lvl3_corr_mat = matrix(c(1000, 0,
-                         0, 50), 2, 2)
+                          0, 1), 2, 2)
+lvl3_corr_mat = matrix(c(100, 0,
+                          0, 100), 2, 2)
 ```
 ## Generate 3 levels data with 3 groups that contains each 8 subgroups, and each subgroup contains 25 individuals
 ```{r}
-set.seed(50)
-data = simulate_data(
-  n1 = 25,
-  n2 = 8,
-  n3 = 3,
-  fixed_slope = -2,
-  fixed_intercept = 2,
-  lvl2_corr_mat = lvl2_corr_mat,
-  lvl3_corr_mat = lvl3_corr_mat,
-  sigma2 = 1
-)
+set.seed(10)
+data = simulate_data( n1 = 25,
+                      n2 = 8,
+                      n3 = 3,
+                      fixed_slope = -2,
+                      fixed_intercept = 2,
+                      lvl2_corr_mat = lvl2_corr_mat,
+                      lvl3_corr_mat = lvl3_corr_mat,
+                      sigma2 = 1
+                      )
 head(data, 5)
 ```
 ## Random effets coefficients
@@ -55,14 +54,13 @@ print(ggplot2::ggplot(data = data) + geom_point(aes(x = x, y= y, col=lvl3)) + fa
 
 ## Fit a clusterwise lmm with 3 classes that tries to find level 3 clustering.
 ```{r}
-formula = formula(y ~ x + (0 + x || lvl2))
-final_model = clusterwiselmm(
-  data = data,
-  target = data$y,
-  K = 3,
-  formula = formula,
-  nb_trials = 5
-)
+formula = formula(y ~ x + (x||lvl2))
+final_model = clusterwiselmm(data = data,
+               target=data$y,
+               K=3,
+               formula = formula,
+               nb_trials = 1
+              )
 print(toString(c("Final mse :", final_model$cost)))
 ```
 ## Visualize final clustering

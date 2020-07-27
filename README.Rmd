@@ -30,7 +30,8 @@ install.packages("clusterwiselmm")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+This is a basic example which shows you how to solve a common problem where we have a 3 levels data organized into 3 unknown groups:
+We simulate this data using \code{simulate_data} function provided with the package.
 
 ```{r example}
 library(clusterwiselmm)

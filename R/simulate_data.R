@@ -46,7 +46,7 @@
 #' @importFrom stats runif
 #'
 #' @examples
-#' ## define correlation matrices for random effets slopes and intercepts
+#' ## define correlation matrices for random effects slopes and intercepts
 #' lvl2_corr_mat = matrix(c(1, 0,
 #'                          0, 1), 2, 2)
 #' lvl3_corr_mat = matrix(c(10, 0,
@@ -64,39 +64,55 @@
 #'                      sigma2 = 1
 #'                      )
 #'
-simulate_data <- function(n1, n2, n3, fixed_slope, fixed_intercept, lvl2_corr_mat, lvl3_corr_mat , sigma2, separable_in_x=TRUE, distance_factor=2){
-  # generate lvl3 coefficients
-  u_lvl3 = mvrnorm(n3, c(0, 0), lvl3_corr_mat )
-  gamma00k = u_lvl3[, 1] + fixed_intercept
-  gamma10k = u_lvl3[, 2] + fixed_slope
-  # generate lvl2 coefficients
-  u_lvl2 = mvrnorm(n2*n3, c(0, 0), lvl2_corr_mat)
-  beta0jk = u_lvl2[, 1] + rep(gamma00k, each=n2)
-  beta1jk = u_lvl2[, 2] + rep(gamma10k, each=n2)
-  # generate x (lvl1)
-  if(separable_in_x){
-    X = runif(n1*n2*n3, -1, 1) + rep((0:(n3-1))*distance_factor, each=n1*n2)
+simulate_data <-
+  function(n1,
+           n2,
+           n3,
+           fixed_slope,
+           fixed_intercept,
+           lvl2_corr_mat,
+           lvl3_corr_mat ,
+           sigma2,
+           separable_in_x = TRUE,
+           distance_factor = 2) {
+    # generate level 3 coefficients
+    u_lvl3 = mvrnorm(n3, c(0, 0), lvl3_corr_mat)
+    gamma00k = u_lvl3[, 1] + fixed_intercept
+    gamma10k = u_lvl3[, 2] + fixed_slope
+    # generate level 2 coefficients
+    u_lvl2 = mvrnorm(n2 * n3, c(0, 0), lvl2_corr_mat)
+    beta0jk = u_lvl2[, 1] + rep(gamma00k, each = n2)
+    beta1jk = u_lvl2[, 2] + rep(gamma10k, each = n2)
+    # generate x (level1)
+    if (separable_in_x) {
+      X = runif(n1 * n2 * n3, -1, 1) + rep((0:(n3 - 1)) * distance_factor, each =
+                                             n1 * n2)
+    }
+    else{
+      X = rep(runif(n1, 0, 10), n2 * n3)
+    }
+    # compute the target variable y
+    Y = rep(beta0jk, each = n1) + rep(beta1jk, each = n1) * X + mvrnorm(n1 *
+                                                                          n2 * n3, 0, sigma2)
+    # generate level 2 and level 3 classes
+    lvl3 = rep(1:n3, each = n1 * n2)
+    lvl2 = rep(1:n2, each = n1)
+    # generate level 2 and level 3 coefficients
+    lvl3_intercepts = rep(u_lvl3[, 1], each = n1 * n2)
+    lvl3_slopes = rep(u_lvl3[, 2], each = n1 * n2)
+    lvl2_intercepts = rep(u_lvl2[, 1], each = n1)
+    lvl2_slopes = rep(u_lvl2[, 2], each = n1)
+    # return the resulting data frame
+    return(data.frame(
+      list(
+        "x" = X,
+        "y" = Y,
+        "lvl2" = as.factor(lvl2),
+        "lvl3" = as.factor(lvl3),
+        "lvl3_intercepts" = lvl3_intercepts,
+        "lvl3_slopes" = lvl3_slopes,
+        "lvl2_intercepts" = lvl2_intercepts,
+        "lvl2_slopes" = lvl2_slopes
+      )
+    ))
   }
-  else{
-    X = rep(runif(n1, 0, 10),n2*n3)
-  }
-  # compute the target variable y
-  Y = rep(beta0jk, each=n1) + rep(beta1jk, each=n1) * X + mvrnorm(n1*n2*n3, 0, sigma2)
-  # generate lvl2 and lvl3 classes
-  lvl3 = rep(1:n3, each=n1*n2)
-  lvl2 = rep(1:n2, each=n1)
-  # generate lvl2 and lvl3 coefs
-  lvl3_intercepts = rep(u_lvl3[, 1], each=n1*n2)
-  lvl3_slopes = rep(u_lvl3[, 2], each=n1*n2)
-  lvl2_intercepts = rep(u_lvl2[, 1], each=n1)
-  lvl2_slopes = rep(u_lvl2[, 2], each=n1)
-  # return the resulting dataframe
-  return( data.frame(list("x"=X,
-                          "y"=Y,
-                          "lvl2"=lvl2,
-                          "lvl3"=lvl3,
-                          "lvl3_intercepts"= lvl3_intercepts,
-                          "lvl3_slopes"= lvl3_slopes,
-                          "lvl2_intercepts"= lvl2_intercepts,
-                          "lvl2_slopes"= lvl2_slopes)))
-}

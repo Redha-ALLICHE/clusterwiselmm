@@ -76,7 +76,7 @@ With : \cr
 }
 }
 \examples{
-## define correlation matrices for random effets slopes and intercepts
+## define correlation matrices for random effects slopes and intercepts
 lvl2_corr_mat = matrix(c(1, 0,
                          0, 1), 2, 2)
 lvl3_corr_mat = matrix(c(10, 0,

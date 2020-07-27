@@ -13,13 +13,21 @@
 #' @importFrom lme4 lmer
 #'
 
-adjust_models <- function(data, formula, K, clusters){
+adjust_models <- function(data, formula, K, clusters) {
   models = list()
-  for(i in 1:K){
-    sample = data[which(clusters==i),]
-    model = tryCatch(suppressMessages(suppressWarnings(lmer(formula, sample, verbose = FALSE))),
-                     error = function(e) {print(e)});
-    if(typeof(model) != "S4") return(NULL)
+  for (i in 1:K) {
+    sample = data[which(clusters == i), ]
+    model = tryCatch(
+      suppressMessages(suppressWarnings(lmer(
+        formula, sample, verbose = FALSE
+      ))),
+      error = function(e) {
+        print(e)
+      }
+    )
+
+    if (typeof(model) != "S4")
+      return(NULL)
     models = append(models, model)
   }
   class(models) = "clmm"
